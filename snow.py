@@ -35,7 +35,7 @@ class SnowParticle(pygame.sprite.Sprite):
         self.pos = Vector2(
             random.uniform(
                 0 - border.x,
-                screen.width + border.x
+                screen.get_width() + border.x
                 ),
             -border.y
         )
@@ -44,9 +44,9 @@ class SnowParticle(pygame.sprite.Sprite):
         self.pos += (dt * self.wind, dt * self.speed)
         
         if (
-            self.pos.y > self.screen.height or
+            self.pos.y > self.screen.get_height() or
             (self.wind < 0 and self.pos.x < 0) or 
-            (self.wind > 0 and self.pos.x > self.screen.width)
+            (self.wind > 0 and self.pos.x > self.screen.get_width())
             ):
             
             self.kill() 
@@ -55,7 +55,7 @@ class SnowParticle(pygame.sprite.Sprite):
             self.rect = self.image.get_rect().move(self.pos)
         
         
-class SnowFactory(pygame.sprite.Group[SnowParticle]):
+class SnowFactory(pygame.sprite.Group):
     def __init__(
         self, screen: Surface,
         max_particles: int,
